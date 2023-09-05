@@ -1,0 +1,89 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+.nav_usuario{
+    background-color: rgb(255, 254, 254);
+}
+.text_nav{
+    font-family:'Great Vibes', cursive;
+    color: #663300;
+    font-size: 40px;
+}
+.text_nav:hover{
+    color: #CC3366;
+}
+.nav{
+    justify-content: right;
+    display: flex;
+}
+.item_nav{
+    list-style: none;
+}
+.item_active:active{
+    border-top: solid 2px #CC3366 ;
+    list-style: none;
+}
+.texto{
+    color: #663300;
+    text-decoration: none;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.form{
+    background-color: rgba(0, 0, 0, 0.432);
+    border-radius: 12px;
+    margin: 0 auto;
+}
+.text_carta{
+    font-family:'Great Vibes', cursive;
+    color: white;
+    font-size: 25px;
+}
+.form_carta{
+    background-color: rgba(0, 0, 0, 0.432);
+    border-radius: 12px;
+    width: fit-content;
+    padding: 0;
+}
+.text_p_form{
+    font-family:'Great Vibes', cursive;
+    color: white;
+    font-size: 40px;
+}
+.text_form{
+    color: white;
+    font-size: 12px;
+    text-decoration: none;
+}
+.text_precio{
+    color:#CC3366;
+    font-size: 16px;
+    font-weight: bold;
+}
+.text_eventos{
+    color: #CC3366;
+    font-size: 12px;
+    font-weight: bold;
+}
+.a_carta{
+    text-decoration: none;
+}
+.menu{
+    border-top: #CC3366 1px solid;
+    border-bottom: #CC3366 1px solid;
+}
+.input_form{
+    background-color: black;
+    opacity: 60%;
+    border-radius: 12px;
+    border: 0;
+}
+.ingresar{
+    background-color: #CC3366;
+    opacity: 80%;
+    box-shadow: 2px 3px rgba(0, 0, 0, 0.466);
+    border-radius: 14px;
+    border: 0;
+}
+.ingresar:hover{
+    background-color: #CC3366;
+    opacity: 70%;
+}
