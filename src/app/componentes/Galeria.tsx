@@ -1,5 +1,5 @@
 'use client'
-// pages/automatic-gallery.tsx
+
 import React, { useState, useEffect } from 'react';
 import Head from 'next/head';
 
@@ -11,7 +11,7 @@ const AutomaticGalleryPage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-    }, 3000); // Cambia el valor de 3000 para ajustar la velocidad del desplazamiento automático
+    }, 3000); 
 
     return () => clearInterval(interval);
   }, []);

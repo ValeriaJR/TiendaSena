@@ -2,7 +2,7 @@
 import styles from "../usuario.module.css"
 import AutomaticGalleryPage from "@/app/componentes/Galeria"
 const backgroundStylesU: React.CSSProperties = {
-    backgroundImage: `url('/userp.svg/')`, // Reemplaza con la ruta de tu imagen
+    backgroundImage: `url('/userp.svg/')`, 
     backgroundSize: 'cover',
     backgroundPosition: 'center',
     minHeight: '100vh',
@@ -10,7 +10,7 @@ const backgroundStylesU: React.CSSProperties = {
 export default function Inicio(){
     return(
         <>
-        <div className="container-fluid mt-5" style={backgroundStylesU}>
+        <div className="container-fluid " style={backgroundStylesU}>
             <div className="row text-center mt-5 mb-3">
                 <AutomaticGalleryPage/>
             </div>

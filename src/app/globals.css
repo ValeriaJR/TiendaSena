@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
+@import 'bootstrap/dist/css/bootstrap.min.css';
 .text_footer{
   font-size: 12px;
 }
@@ -6,6 +8,60 @@
   display: flex;
 }
 .foot{
-  background-color: rgb(251, 255, 255);
+  background-color: rgb(255, 255, 255);
 }
+.nav_admin{
+  background-color: rgb(255, 254, 254);
+  -webkit-box-shadow: -1px 17px 26px -20px rgba(0,0,0,0.75);
+-moz-box-shadow: -1px 17px 26px -20px rgba(0,0,0,0.75);
+box-shadow: -1px 17px 26px -20px rgba(0,0,0,0.75);
+}
+.text_nav{
+  font-family:'Great Vibes', cursive;
+  color: #663300;
+  font-size: 40px;
+}
+.nav{
+  justify-content: right;
+  display: flex;
+}
+.texto_menu{
+  color: #663300;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.texto_menu:hover{
+  color: #CC3366 ;
+}
+.texto_drop{
+  color: black;
+  font-size: 14px;
+  text-decoration: none;
+  cursor: pointer;
+}
+.back_menu{
+  background-color: rgba(53, 53, 53, 0.205);
+}
+.tittle{
+  border-bottom: #663300 solid 3px;
+  text-decoration: none;
+  color: #663300;
+}
+.form{
+  background-color: #EAE5DE;
+  border-radius: 12px;
+}
+.input_form{
+  color: #663300;
+  font-size: 14px;
+  background-color: #6633002d;
+  border: 0;
+  border-radius: 8px;
+  outline: none;
+}
+.table{
+  background-color: #00000011;
+}
+
 

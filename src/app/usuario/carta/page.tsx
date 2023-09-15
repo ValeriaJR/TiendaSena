@@ -1,7 +1,7 @@
 "use client";
 import styles from "../usuario.module.css";
 const backgroundStylesU: React.CSSProperties = {
-  backgroundImage: `url('/userp.svg/')`, // Reemplaza con la ruta de tu imagen
+  backgroundImage: `url('/userp.svg/')`, 
   backgroundSize: 'cover',
   backgroundPosition: 'center',
   minHeight: '100vh',
@@ -9,7 +9,7 @@ const backgroundStylesU: React.CSSProperties = {
 export default function Menu() {
   return (
     <>
-      <div className="container-fluid mt-5" style={backgroundStylesU}>
+      <div className="container-fluid " style={backgroundStylesU}>
         <div className="row">
           <div className="col-12 text-center mt-5">
             <span className={`${styles.text_p_form} col-10 text-center  ms-4`}>

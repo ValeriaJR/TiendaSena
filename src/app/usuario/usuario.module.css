@@ -7,9 +7,7 @@
     color: #663300;
     font-size: 40px;
 }
-.text_nav:hover{
-    color: #CC3366;
-}
+
 .nav{
     justify-content: right;
     display: flex;
@@ -17,7 +15,7 @@
 .item_nav{
     list-style: none;
 }
-.item_active:active{
+.item_active{
     border-top: solid 2px #CC3366 ;
     list-style: none;
 }
@@ -25,8 +23,11 @@
     color: #663300;
     text-decoration: none;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    font-size: 14px;
 }
-
+.texto:hover{
+    color: #CC3366;
+}
 .form{
     background-color: rgba(0, 0, 0, 0.432);
     border-radius: 12px;
@@ -50,7 +51,7 @@
 }
 .text_form{
     color: white;
-    font-size: 12px;
+    font-size: 14px;
     text-decoration: none;
 }
 .text_precio{
