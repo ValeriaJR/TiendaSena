@@ -1,4 +1,4 @@
-
+'use client'
 import Drop from "../componentes/Drop";
 import Main from "../componentes/Main";
 import NavAdmin from "../componentes/NavAdmin";

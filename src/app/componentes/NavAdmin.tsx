@@ -5,9 +5,9 @@ export default function NavAdmin(){
         <>
         
         <div className="row nav_admin">
-                <div className="col-1 p-1"><img src="/Layer1000.svg" alt="logo"></img></div>
-                <div className="text_nav col-4">La Tienda del Café</div>
-                <div className="nav col-7 text-center pt-2 pe-4">
+                <div className="col-1 py-1 ps-5"><img src="/Layer1000.svg" alt="logo"></img></div>
+                <div className="text_nav col-4 pt-2">La Tienda del Café</div>
+                <div className="nav col-7 text-center pt-3 pe-5">
                     <FaRightFromBracket style={{color: "#cc3366", fontSize: '30px'}}  />
                     
                 </div>

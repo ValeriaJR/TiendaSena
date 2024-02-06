@@ -1,7 +1,6 @@
 'use client'
 import styles from "../../usuario/usuario.module.css"
 import Registrar from "@/app/componentes/botones/registrar";
-
 export default function vistaFactura(){
  return(<>
     <div className="row my-4">
