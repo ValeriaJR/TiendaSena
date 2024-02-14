@@ -1,6 +1,25 @@
 'use client'
-import Registrar from "@/app/componentes/botones/registrar"
-export default function registroUsuario(){
+import Registrar from "@/app/componentes/botones/registrar";
+import { useState } from "react";
+import axios from "axios";
+export default function RegistroUsuario(){
+
+const [cedula, setCedula] = useState(0);
+const [nombre, setNombre] = useState("");
+const [apellido, setApellido] = useState("");
+const [correo, setCorreo] = useState("");
+
+const add = ()=>{
+    axios.post("http://localhost:3001/create",{
+        cedula:cedula,    
+        nombre:nombre,
+        apellido:apellido,
+        correo:correo
+    }).then(()=>{
+        alert("Usuario registrado");
+    });
+}
+
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Registrar Usuario</a></div>
@@ -8,23 +27,15 @@ export default function registroUsuario(){
     <div className="row justify-content-center">
         <div className="form col-5 py-4">
             <label className="texto_menu col-4">Nombres</label>
-            <input type="text" className="col-7 m-2 input_form" ></input>
+            <input onChange={(event) => { setNombre(event.target.value); }} type="text" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Apellidos</label>
-            <input type="text" className="col-7 m-2 input_form" ></input>
+            <input onChange={(event) => { setApellido(event.target.value); }}type="text" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Correo electrónico</label>
-            <input type="text" className="col-7 m-2 input_form" ></input>
-            <label className="texto_menu col-4">Tipo de documento</label>
-            <select className="col-7 m-2 input_form">
-                <option>seleccciona el tipo</option>
-                <option >Tarjeta de identidad</option>
-                <option >Cedula</option>  
-                <option >Cedula de extrangeria</option>
-                <option >Registro civil</option>  
-                </select>
+            <input onChange={(event) => { setCorreo(event.target.value); }}type="text" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Número de documento</label>
-            <input type="number" className="col-7 m-2 input_form" ></input>
+            <input onChange={(event) => { setCedula(parseInt(event.target.value)); }}type="number" className="col-7 m-2 input_form" ></input>
             <div className="row text-center my-3">
-            <div className=""><Registrar/></div><br></br>
+            <div className="" onClick={add}><Registrar/></div><br></br>
         </div>
         </div>
     </div>

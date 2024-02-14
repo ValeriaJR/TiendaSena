@@ -1,6 +1,16 @@
 'use client'
 import styles from "@/app/usuario/usuario.module.css"
-export default function provedores(){
+import axios from "axios";
+import { useEffect, useState } from "react";
+
+export default function Provedores(){
+    const [proveedoresList,setProveedores] = useState([])
+  useEffect(() =>{
+    axios.get("http://localhost:3001/proveedores",).then((response)=>{
+        setProveedores(response.data);
+    });
+  }, [])
+    console.log(proveedoresList)
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Proveedores Registrados</a></div>
@@ -17,11 +27,15 @@ export default function provedores(){
             <div className="col-3">Telefono</div>
         </div>
         <div className="row mx-2 my-1 texto_drop">
-        <div className="col-2">1112233</div>
-            <div className="col-2">Susana</div>
-            <div className="col-3">Amaya </div>
-            <div className="col-2 ps-3">La Ceja</div>
-            <div className="col-3 ps-3">2233335566</div>
+        {proveedoresList.map((val,key)=>{
+            return <>
+            <div className="col-2">{val.nit}</div>
+            <div className="col-2">{val.nombre}</div>
+            <div className="col-3">{val.apellido}</div>
+            <div className="col-2 ps-3">{val.direccion}</div>
+            <div className="col-3 ps-3">{val.telefono}</div>
+            </>})
+        }
         </div>
     </div>
  </>)

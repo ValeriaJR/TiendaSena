@@ -4,7 +4,7 @@ import style from "@/app/admin/admin.module.css"
 export default function insumos(){
  return(<>
     <div className="row my-4">
-        <div className="text_nav text-center"><a className="tittle">Inventario de utensilios</a></div>
+        <div className="text_nav text-center"><a className="tittle">Inventario de Insumos</a></div>
     </div>
     <div className="row justify-content-center">
         <div className="col-sm-6 col-md-4 col-lg-3 text-center p-1">

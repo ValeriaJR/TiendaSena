@@ -7,6 +7,7 @@ export default function Drop(){
   return (
     <>
     <div>
+    
         <div className="text-center mt-5 pb-5 border-bottom">
             <FaRegUserCircle  style={{color: "#663300", fontSize: '80px'}}/>
         </div>

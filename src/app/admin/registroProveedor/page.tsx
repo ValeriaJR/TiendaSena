@@ -1,24 +1,45 @@
 'use client'
 import Registrar from "@/app/componentes/botones/registrar"
-export default function registroProveedor(){
+import { useState } from "react";
+import axios from "axios";
+
+export default function RegistroProveedor(){
+    const [nit, setNit] = useState(0);
+    const [nombre, setNombre] = useState("");
+    const [apellido, setApellido] = useState("");
+    const [direccion, setDireccion] = useState("");
+    const [telefono, setTelefono] = useState(0);
+    
+    const add = ()=>{
+        axios.post("http://localhost:3001/createProveedores",{
+            nit:nit,    
+            nombre:nombre,
+            apellido:apellido,
+            direccion:direccion,
+            telefono:telefono
+        }).then(()=>{
+            alert("Proveedor registrado");
+        });
+    }
+    
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Registrar Proveedor</a></div>
     </div>
     <div className="row justify-content-center">
         <div className="form col-5 py-4">
-            <label className="texto_menu col-4">Nombre</label>
-            <input type="text" className="col-7 m-2 input_form" ></input>
-            <label className="texto_menu col-4">Apellidos</label>
-            <input type="text" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Nit/Documento</label>
-            <input type="number" className="col-7 m-2 input_form" ></input>
+            <input onChange={(event) => { setNit(parseInt(event.target.value)); }}type="number" className="col-7 m-2 input_form" ></input>
+            <label className="texto_menu col-4">Nombre</label>
+            <input onChange={(event) => { setNombre(event.target.value); }}type="text" className="col-7 m-2 input_form" ></input>
+            <label className="texto_menu col-4">Apellidos</label>
+            <input onChange={(event) => { setApellido(event.target.value); }}type="text" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Direccion</label>
-            <input type="text" className="col-7 m-2 input_form" ></input>
+            <input onChange={(event) => { setDireccion(event.target.value); }}type="text" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Telefono</label>
-            <input type="number" className="col-7 m-2 input_form" ></input>
+            <input onChange={(event) => { setTelefono(parseInt(event.target.value)); }}type="number" className="col-7 m-2 input_form" ></input>
             <div className="row text-center my-3">
-            <div className=""><Registrar/></div><br></br>
+            <div className=""onClick={add}><Registrar/></div><br></br>
         </div>
         </div>
     </div>

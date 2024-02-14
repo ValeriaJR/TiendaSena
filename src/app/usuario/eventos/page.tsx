@@ -25,9 +25,7 @@ export default function Eventos(){
                         <div className="col-3 my-1">
                             <span className={`${styles.text_eventos} col-10`}>2023/07/23</span>
                         </div>
-                        <div className={`${styles.menu} col-3 my-1 text-center`}>
-                            <a className={`${styles.a_carta}`} href="/carta"><span className={`${styles.text_form} col-10`}>Ver Menú</span></a>
-                        </div> 
+                    
                 </div>
             </div>    
         </div>
