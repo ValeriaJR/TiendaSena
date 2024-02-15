@@ -1,5 +1,7 @@
 'use client'
 import styles from "../usuario.module.css"
+import axios from "axios";
+import { useEffect, useState } from "react";
 const backgroundStylesU: React.CSSProperties = {
     backgroundImage: `url('/userp.svg/')`, 
     backgroundSize: 'cover',
@@ -7,6 +9,13 @@ const backgroundStylesU: React.CSSProperties = {
     minHeight: '100vh',
 };
 export default function Eventos(){
+    const [eventosList,setEventos] = useState([])
+  useEffect(() =>{
+    axios.get("http://localhost:3001/eventos",).then((response)=>{
+        setEventos(response.data);
+    });
+  }, [])
+    console.log(eventosList)
     return(
         <>
         <div className="container-fluid " style={backgroundStylesU}>
@@ -15,19 +24,23 @@ export default function Eventos(){
                 <span className={`${styles.text_p_form} col-10 text-center ms-4`}>Eventos</span>
             </div>
             </div>
+            {eventosList.map((val,key)=>{
+            return <>
             <div className={`${styles.form_carta} row m-3 p-0`}>
-                <div className="col-4 container-fluid g-0 ">
+                <div className="col-4 container-fluid g-0 ">{val.imagen}
                     <img className="col-8 px-0 rounded-start" src="/IMAGE.png" alt=""></img>
                 </div>
                 <div className="col-8">
-                    <span className={`${styles.text_carta} col-8`}>Tarde de Menú</span><br></br>
-                    <span className={`${styles.text_form} col-10`}> Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolor dolorum odit corrupti at nemo est facere voluptatem dolorem ipsa quibusdam? Quas praesentium optio harum deserunt ad aliquam aperiam eveniet eum?</span>
+                    <span className={`${styles.text_carta} col-8`}>{val.hora_inicio}-{val.hora_fin}</span><br></br>
+                    <span className={`${styles.text_form} col-10`}>{val.descripcion}</span>
                         <div className="col-3 my-1">
-                            <span className={`${styles.text_eventos} col-10`}>2023/07/23</span>
+                            <span className={`${styles.text_eventos} col-10`}>{val.fecha}<br></br>Cupos: {val.cupo}</span>
                         </div>
                     
                 </div>
-            </div>    
+            </div>
+            </>})
+        }    
         </div>
         </>
     )

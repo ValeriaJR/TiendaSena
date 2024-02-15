@@ -29,7 +29,7 @@ export default function RegistroCarta(){
     <div className="row justify-content-center">
         <div className="form col-5 py-4">
             <label className="texto_menu col-4">Imagen</label>
-            <input  onChange={(event) => { setImagen(event.target.files[0]); }} name="imagen"  type="file" className="col-7 m-2 input_form" ></input>
+            <input  onChange={(event) => { setImagen(event.target.value); }} name="imagen"  type="file" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Nombre</label>
             <input  onChange={(event) => { setNombre(event.target.value); }} value={nombre} type="text" className="col-7 m-2 input_form" ></input>
             <label className="texto_menu col-4">Descripción</label>

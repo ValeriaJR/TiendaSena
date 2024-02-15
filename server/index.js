@@ -1,5 +1,3 @@
-const path = require("path")
-const fileURL = require("url")
 const express = require("express");
 const app = express();
 const mysql = require("mysql2");
@@ -14,6 +12,7 @@ const db = mysql.createConnection({
     password: "",
     database: "cafe_sena"
 });
+//usuarios
 app.post("/create", (req, res) => {
     const cedula = req.body.cedula;
     const nombre = req.body.nombre;
@@ -30,6 +29,20 @@ app.post("/create", (req, res) => {
         }
     );
 });
+app.get("/usuarios", (req, res) => {
+    let response
+    db.query('SELECT * FROM usuarios',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
+//insumos
 app.post("/createInsumos", (req, res) => {
     const codigo = req.body.codigo;
     const nombre = req.body.nombre;
@@ -49,6 +62,20 @@ app.post("/createInsumos", (req, res) => {
         }
     );
 });
+app.get("/insumos", (req, res) => {
+    let response
+    db.query('SELECT * FROM insumos',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
+//utensilios
 app.post("/createUtensilios", (req, res) => {
     const codigo = req.body.codigo;
     const nombre = req.body.nombre;
@@ -65,6 +92,20 @@ app.post("/createUtensilios", (req, res) => {
         }
     );
 });
+app.get("/utensilios", (req, res) => {
+    let response
+    db.query('SELECT * FROM utensilios',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
+//proveedores
 app.post("/createProveedores", (req, res) => {
     const nit = req.body.nit;
     const nombre = req.body.nombre;
@@ -82,6 +123,20 @@ app.post("/createProveedores", (req, res) => {
         }
     );
 });
+app.get("/proveedores", (req, res) => {
+    let response
+    db.query('SELECT * FROM proveedores',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
+//consumidores
 app.post("/createConsumidores", (req, res) => {
     const cedula = req.body.cedula;
     const nombre = req.body.nombre;
@@ -98,6 +153,20 @@ app.post("/createConsumidores", (req, res) => {
         }
     );
 });
+app.get("/consumidores", (req, res) => {
+    let response
+    db.query('SELECT * FROM consumidores',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
+//evento
 app.post("/registrarEvento", (req, res) => {
     const codigo = req.body.codigo
     const fecha = req.body.fecha;
@@ -118,41 +187,22 @@ app.post("/registrarEvento", (req, res) => {
         }
     );
 });
-const dirname = path.dirname
-const fileURLToPath = fileURL.fileURLToPath
-const CURRENT_DIR = dirname(fileURLToPath())
-
-const multerUpload = multer({
-    dest: join(CURRENT_DIR, './public/images'),
-    limits: {
-        fieldSize: 1000000
-    }
-})
-
-app.post("/createProductos", multerUpload.single('imagen') , (req, res) => {
-    console.log(req.file);
-    res.sendStatus(200)
-    // const codigo = req.body.codigo;
-    // const imagen = "hola";
-    // const nombre = req.body.nombre;
-    // const descripcion = req.body.descripcion;
-    // const precio = req.body.precio;
-    // const cantidad = req.body.cantidad;
-
-
-
-    // db.query('INSERT INTO productos(codigo, imagen, nombre, descripcion, precio, cantidad) VALUES(?,?,?,?,?,?)', [codigo, imagen, nombre, descripcion, precio, cantidad],
-    //     (err, result) => {
-    //         if (err) {
-    //             console.log(err);
-    //         } else {
-    //             res.send("producto registrado");
-    //         }
-    //     }
-    // );
+app.get("/eventos", (req, res) => {
+    let response
+    db.query('SELECT * FROM eventos',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
 });
-app.put("/updateProductos", (req, res) => {
-    const codigo = req.body.codigo
+//productos
+app.post("/createProductos", (req, res) => {
+    const codigo = req.body.codigo;
     const imagen = req.body.imagen;
     const nombre = req.body.nombre;
     const descripcion = req.body.descripcion;
@@ -161,6 +211,23 @@ app.put("/updateProductos", (req, res) => {
 
 
 
+    db.query('INSERT INTO productos(codigo, imagen, nombre, descripcion, precio, cantidad) VALUES(?,?,?,?,?,?)', [codigo, imagen, nombre, descripcion, precio, cantidad],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("producto registrado");
+            }
+        }
+    );
+});
+app.put("/updateProductos", (req, res) => {
+    const codigo = req.body.codigo
+    const imagen = req.body.imagen;
+    const nombre = req.body.nombre;
+    const descripcion = req.body.descripcion;
+    const precio = req.body.precio;
+    const cantidad = req.body.cantidad;
     db.query('UPDATE productos SET codigo=?, imagen=?, nombre=?, descripcion=?, precio=?, cantidad=? WHERE codigo=?', [codigo, imagen, nombre, descripcion, precio, cantidad],
         (err, result) => {
             if (err) {
@@ -171,32 +238,7 @@ app.put("/updateProductos", (req, res) => {
         }
     );
 });
-app.get("/usuarios", (req, res) => {
-    let response
-    db.query('SELECT * FROM usuarios',
-        (err, result) => {
-            if (err) {
-                response = err
-            } else {
-                response = res.send(result);
-            }
-        }
-    );
-    return response
-});
-app.get("/consumidores", (req, res) => {
-    let response
-    db.query('SELECT * FROM consumidores',
-        (err, result) => {
-            if (err) {
-                response = err
-            } else {
-                response = res.send(result);
-            }
-        }
-    );
-    return response
-});
+
 app.get("/productos", (req, res) => {
     let response
     db.query('SELECT * FROM productos',
@@ -210,19 +252,7 @@ app.get("/productos", (req, res) => {
     );
     return response
 });
-app.get("/proveedores", (req, res) => {
-    let response
-    db.query('SELECT * FROM proveedores',
-        (err, result) => {
-            if (err) {
-                response = err
-            } else {
-                response = res.send(result);
-            }
-        }
-    );
-    return response
-});
+
 /*app.post("/create", (req, res) => {
     const Consumidor = req.body.Consumidor;
     const Pago = req.body.Pago;

@@ -4,27 +4,12 @@ import style from "@/app/admin/admin.module.css"
 import axios from "axios";
 import { useEffect, useState } from "react";
 export default function Carta(){
-    const [imagen, setImagen] = useState("");
-    const [nombre, setNombre] = useState("");
-    const [descripcion, setDescripcion] = useState("");
-    const [precio, setPrecio] = useState(0);
-    const [cantidad, setCantidad] = useState(0);
-const [editar, setEditar] = useState (false)
     const [productosList,setProductos] = useState([])
     useEffect(() =>{
       axios.get("http://localhost:3001/productos",).then((response)=>{
           setProductos(response.data);
       });
-    }, [])
-      console.log(productosList)
-    const editarProducto = (val)=>{
-        setEditar(true);
-        setImagen(val.imagen);
-        setNombre(val.nombre);
-        setDescripcion(val.descripcion);
-        setPrecio(val.precio);
-        setCantidad(val.cantidad);
-    }
+    }, )
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Carta</a></div>
