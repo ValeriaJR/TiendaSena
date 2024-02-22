@@ -2,7 +2,7 @@ const express = require("express");
 const app = express();
 const mysql = require("mysql2");
 const cors = require("cors")
-const multer = require('multer')
+const multer = require('multer');
 app.use(cors());
 app.use(express.json());
 
@@ -12,6 +12,36 @@ const db = mysql.createConnection({
     password: "",
     database: "cafe_sena"
 });
+//login
+app.post("/login", (req, res) => {
+    const { correo, contrasena } = req.body;
+
+    // Buscar el usuario en la base de datos
+    db.query("SELECT * FROM usuarios WHERE correo = ?", [correo], (err, user) => {
+        console.log(user[0].cedula);
+        if (err) {
+            res.status(500).json({ error: "Error al obtener usuario" });
+        } else if (!user.length) {
+            res.status(404).json({ error: "Usuario no encontrado" });
+        } else {
+            // Comparar la contraseña proporcionada con la contraseña almacenada
+            if (contrasena !== user[0].cedula) {
+                res.status(401).json({ error: "Contraseña incorrecta" });
+            } else {
+                // Generar una respuesta con el usuario
+                const response = {
+                    nombre: user[0].nombre,
+                    correo: user[0].correo,
+                };
+                // Enviar la respuesta al cliente
+                res.send(response);
+            }
+        }
+    });
+});
+
+
+
 //usuarios
 app.post("/create", (req, res) => {
     const cedula = req.body.cedula;
