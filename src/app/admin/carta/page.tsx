@@ -4,12 +4,19 @@ import style from "@/app/admin/admin.module.css"
 import axios from "axios";
 import { useEffect, useState } from "react";
 export default function Carta(){
+    
+    const eliminar = (codigo)=>{
+        axios.delete('http://localhost:3001/deleteProductos/${codigo}',{    
+        })
+
+    }
     const [productosList,setProductos] = useState([])
     useEffect(() =>{
       axios.get("http://localhost:3001/productos",).then((response)=>{
           setProductos(response.data);
       });
     }, )
+    
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Carta</a></div>
@@ -33,7 +40,9 @@ export default function Carta(){
                 editarProducto(val);
             }}
             type="submit"><a href="/admin/registroCarta" className={`${styles.text_form}`}>Editar</a></button>
-            <button className={`${styles.ingresar} col-5 text-center align-items-center p-1 `} type="submit"><a href="/admin/registroCarta" className={`${styles.text_form}`}>Dar de baja</a></button>      
+            <button className={`${styles.ingresar} col-5 text-center align-items-center p-1 `} onClick={()=>{
+                eliminar(val.codigo);
+            }} type="submit"><a className={`${styles.text_form}`}>Dar de baja</a></button>      
         </div>
         </div>
         </>})
