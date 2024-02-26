@@ -11,7 +11,7 @@ const backgroundStyles: React.CSSProperties = {
 };
 export default function PageInicio() {
     const [user, setUser] = useState("")
-    const [password, setPassword] = useState("")
+    const [password, setPassword] = useState(0)
     const router = useRouter()
     const handleSubmit = () => {
         axios.post("http://localhost:3001/login", {
@@ -19,7 +19,10 @@ export default function PageInicio() {
             contrasena: password
         }).then(() => {
             router.push("/admin")
-        });
+        }).catch(err =>{
+            console.log(err.response.data.error);
+            alert(err.response.data.error)
+        })
     }
     return (
         <>

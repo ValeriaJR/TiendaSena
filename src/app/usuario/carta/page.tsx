@@ -13,34 +13,8 @@ export default function Menu() {
         <div className="row">
           <div className="col-12 text-center mt-5">
             <span className={`${styles.text_p_form} col-10 text-center  ms-4`}>
-              Café
+              Carta
             </span>
-          </div>
-          <div className="col-12 text-center ms-3">
-            <button
-              type="button"
-              className={`${styles.ingresar} py-1 px-2 mt-2 mb-5 mx-3 col-auto`}
-            >
-              <a href="" className={`${styles.text_form}`}>
-                CAFÉ
-              </a>
-            </button>
-            <button
-              type="button"
-              className={`${styles.ingresar} py-1 px-2 mt-2 mb-5 mx-3 col-auto`}
-            >
-              <a href="" className={`${styles.text_form}`}>
-                PANADERIA Y REPOSTERIA
-              </a>
-            </button>
-            <button
-              type="button"
-              className={`${styles.ingresar} py-1 px-2 mt-2 mb-5 mx-3 col-auto `}
-            >
-              <a href="" className={`${styles.text_form}`}>
-                COCTELERIA
-              </a>
-            </button>
           </div>
         </div>
         <div className="row">

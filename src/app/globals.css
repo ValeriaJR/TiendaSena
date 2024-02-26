@@ -21,6 +21,11 @@ box-shadow: -1px 17px 26px -20px rgba(0,0,0,0.75);
   color: #663300;
   font-size: 40px;
 }
+.text_nav_admin{
+  font-family:'Times New Roman', Times, serif;
+  color: #663300;
+  font-size: 40px;
+}
 .nav{
   justify-content: right;
   display: flex;

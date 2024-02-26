@@ -3,6 +3,41 @@ const app = express();
 const mysql = require("mysql2");
 const cors = require("cors")
 const multer = require('multer');
+const path = require("path");
+//Configure Multer Disk Storage
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+      cb(null, "images");
+    },
+    filename: (req, file, cb) => {
+      cb(null, uuidv4() + path.extname(file.originalname));
+    },
+  });
+  //Filter Multer Files With Mime Type
+  const fileFilter = (req, file, cb) => {
+    if (
+      file.mimetype === "image/jpg" ||
+      file.mimetype === "image/png" ||
+      file.mimetype === "image/jpeg" ||
+      file.mimetype === "image/svg"
+    ) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+      console.log("Invalid File Extension");
+    }
+  };
+  
+  // Use Body Parser, Express Static, Multer
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(
+    multer({ storage: storage, fileFilter: fileFilter }).fields([
+      { name: "songfile", maxCount: 1 },
+      { name: "cover", maxCount: 1 },
+    ])
+  );
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(cors());
 app.use(express.json());
 
@@ -18,15 +53,15 @@ app.post("/login", (req, res) => {
 
     // Buscar el usuario en la base de datos
     db.query("SELECT * FROM usuarios WHERE correo = ?", [correo], (err, user) => {
-        console.log(user[0].cedula);
+        console.log(user[0]);
         if (err) {
             res.status(500).json({ error: "Error al obtener usuario" });
         } else if (!user.length) {
-            res.status(404).json({ error: "Usuario no encontrado" });
+            res.status(404).json({ error: "Usuario o contraseña incorrectos" });
         } else {
             // Comparar la contraseña proporcionada con la contraseña almacenada
             if (contrasena !== user[0].cedula) {
-                res.status(401).json({ error: "Contraseña incorrecta" });
+                res.status(401).json({ error: "Usuario o contraseña incorrectos" });
             } else {
                 // Generar una respuesta con el usuario
                 const response = {
@@ -317,6 +352,19 @@ app.post("/createFacturas", (req, res) => {
             }
         }
     );
+});
+app.get("/facturas", (req, res) => {
+    let response
+    db.query('SELECT * FROM facturas',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
 });
 
 app.listen(3001, () => {
