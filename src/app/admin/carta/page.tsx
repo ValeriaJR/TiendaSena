@@ -4,12 +4,6 @@ import style from "@/app/admin/admin.module.css"
 import axios from "axios";
 import { useEffect, useState } from "react";
 export default function Carta(){
-    
-    const eliminar = (codigo)=>{
-        axios.delete('http://localhost:3001/deleteProductos/${codigo}',{    
-        })
-
-    }
     const [productosList,setProductos] = useState([])
     useEffect(() =>{
       axios.get("http://localhost:3001/productos",).then((response)=>{
@@ -18,6 +12,16 @@ export default function Carta(){
       });
     }, [])
     
+    const eliminar = (codigo)=>{
+        axios.delete(`http://localhost:3001/deleteProductos/${codigo}`,{    
+        }).then(()=>{
+            alert("Producto eliminado");
+        }).then(() => {
+            location.reload()
+        })
+
+    }
+
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Carta</a></div>

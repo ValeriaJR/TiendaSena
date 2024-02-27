@@ -29,7 +29,7 @@ const storage = multer.diskStorage({
   };
   
   // Use Body Parser, Express Static, Multer
-  app.use(bodyParser.urlencoded({ extended: false }));
+//   app.use(bodyParser.urlencoded({ extended: false }));
   app.use(
     multer({ storage: storage, fileFilter: fileFilter }).fields([
       { name: "songfile", maxCount: 1 },
@@ -107,6 +107,19 @@ app.get("/usuarios", (req, res) => {
     );
     return response
 });
+app.delete("/deleteUsuarios/:cedula",(req,res)=>{
+    const cedula = req.params.cedula;
+
+    db.query('DELETE from usuarios WHERE cedula=?',[cedula],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send("usuario eliminado con exito");
+        }
+    }
+    );
+});
 //insumos
 app.post("/createInsumos", (req, res) => {
     const codigo = req.body.codigo;
@@ -140,6 +153,19 @@ app.get("/insumos", (req, res) => {
     );
     return response
 });
+app.delete("/deleteInsumos/:codigo",(req,res)=>{
+    const codigo = req.params.codigo;
+
+    db.query('DELETE from insumos WHERE codigo=?',[codigo],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send("insumo eliminado con exito");
+        }
+    }
+    );
+});
 //utensilios
 app.post("/createUtensilios", (req, res) => {
     const codigo = req.body.codigo;
@@ -170,6 +196,19 @@ app.get("/utensilios", (req, res) => {
     );
     return response
 });
+app.delete("/deleteUtensilios/:codigo",(req,res)=>{
+    const codigo = req.params.codigo;
+
+    db.query('DELETE from utensilios WHERE codigo=?',[codigo],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send("utensilio eliminado con exito");
+        }
+    }
+    );
+});
 //proveedores
 app.post("/createProveedores", (req, res) => {
     const nit = req.body.nit;
@@ -188,6 +227,7 @@ app.post("/createProveedores", (req, res) => {
         }
     );
 });
+
 app.get("/proveedores", (req, res) => {
     let response
     db.query('SELECT * FROM proveedores',
@@ -265,6 +305,19 @@ app.get("/eventos", (req, res) => {
     );
     return response
 });
+app.delete("/deleteEventos/:codigo",(req,res)=>{
+    const codigo = req.params.codigo;
+
+    db.query('DELETE from eventos WHERE codigo=?',[codigo],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            res.send("evento eliminado con exito");
+        }
+    }
+    );
+});
 //productos
 app.post("/createProductos", (req, res) => {
     const codigo = req.body.codigo;
@@ -282,6 +335,7 @@ app.post("/createProductos", (req, res) => {
                 console.log(err);
             } else {
                 res.send("producto registrado");
+                
             }
         }
     );
@@ -320,12 +374,21 @@ app.get("/productos", (req, res) => {
 app.delete("/deleteProductos/:codigo",(req,res)=>{
     const codigo = req.params.codigo;
 
-    db.query('DELETE from productos WHERE codigo=?',[codigo],
+    db.query('DELETE from facturas WHERE producto=?',[codigo],
     (err,result)=>{
         if(err){
             console.log(err);
         }else{
             res.send("producto eliminado con exito");
+        }
+    }
+    );
+    db.query('DELETE from productos WHERE codigo=?',[codigo],
+    (err,result)=>{
+        if(err){
+            console.log(err);
+        }else{
+            
         }
     }
     );

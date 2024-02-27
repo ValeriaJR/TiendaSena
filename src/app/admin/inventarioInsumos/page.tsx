@@ -11,6 +11,15 @@ export default function Insumos(){
     });
   }, [])
     console.log(insumosList)
+    const eliminar = (codigo)=>{
+      axios.delete(`http://localhost:3001/deleteInsumos/${codigo}`,{    
+      }).then(()=>{
+          alert("Insumo eliminado");
+      }).then(() => {
+          location.reload()
+      })
+
+  }
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Inventario de Insumos</a></div>
@@ -56,7 +65,9 @@ export default function Insumos(){
               <a href="/admin/inventarioInsumos/editInsumos" className={`${styles.text_form}`}>Editar</a>
             </button>
             <br />
-            <button className={`${style.edit} w-100 my-2 text-center align-items-center p-1 `} type="submit">
+            <button className={`${style.edit} w-100 my-2 text-center align-items-center p-1 `}onClick={()=>{
+                eliminar(val.codigo);
+            }} type="submit">
               <a href="#" className={`${styles.text_form}`}>Dar de baja</a>
             </button>
           </div>

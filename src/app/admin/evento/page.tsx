@@ -29,6 +29,7 @@ const add = ()=>{
     </div>
     <div className="row justify-content-center">
         <div className="form col-5 py-4">
+        <form method="post" action="vistaEvento">
             <label className="texto_menu col-4">Fecha del evento</label>
             <input onChange={(event) => { setFecha(event.target.value); }}type="date" className="col-7 m-2 input_form"></input>
             <label className="texto_menu col-4">Hora de inicio</label>
@@ -42,7 +43,9 @@ const add = ()=>{
             <label className="texto_menu col-4">Cupos disponibles</label>
             <input onChange={(event) => { setCupo(parseInt(event.target.value)); }}type="number" className="col-7 m-2 input_form"></input> 
             <div className="text-center my-3" onClick={add}><Registrar/></div>
+        </form>
         </div>
+        
     </div>
     </>)
 }
