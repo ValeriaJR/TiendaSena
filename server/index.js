@@ -7,35 +7,35 @@ const path = require("path");
 //Configure Multer Disk Storage
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
-      cb(null, "images");
+        cb(null, "images");
     },
     filename: (req, file, cb) => {
-      cb(null, uuidv4() + path.extname(file.originalname));
+        cb(null, uuidv4() + path.extname(file.originalname));
     },
-  });
-  //Filter Multer Files With Mime Type
-  const fileFilter = (req, file, cb) => {
+});
+//Filter Multer Files With Mime Type
+const fileFilter = (req, file, cb) => {
     if (
-      file.mimetype === "image/jpg" ||
-      file.mimetype === "image/png" ||
-      file.mimetype === "image/jpeg" ||
-      file.mimetype === "image/svg"
+        file.mimetype === "image/jpg" ||
+        file.mimetype === "image/png" ||
+        file.mimetype === "image/jpeg" ||
+        file.mimetype === "image/svg"
     ) {
-      cb(null, true);
+        cb(null, true);
     } else {
-      cb(null, false);
-      console.log("Invalid File Extension");
+        cb(null, false);
+        console.log("Invalid File Extension");
     }
-  };
-  
-  // Use Body Parser, Express Static, Multer
+};
+
+// Use Body Parser, Express Static, Multer
 //   app.use(bodyParser.urlencoded({ extended: false }));
-  app.use(
+app.use(
     multer({ storage: storage, fileFilter: fileFilter }).fields([
-      { name: "songfile", maxCount: 1 },
-      { name: "cover", maxCount: 1 },
+        { name: "songfile", maxCount: 1 },
+        { name: "cover", maxCount: 1 },
     ])
-  );
+);
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/images", express.static(path.join(__dirname, "images")));
 app.use(cors());
@@ -107,17 +107,17 @@ app.get("/usuarios", (req, res) => {
     );
     return response
 });
-app.delete("/deleteUsuarios/:cedula",(req,res)=>{
+app.delete("/deleteUsuarios/:cedula", (req, res) => {
     const cedula = req.params.cedula;
 
-    db.query('DELETE from usuarios WHERE cedula=?',[cedula],
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            res.send("usuario eliminado con exito");
+    db.query('DELETE from usuarios WHERE cedula=?', [cedula],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("usuario eliminado con exito");
+            }
         }
-    }
     );
 });
 //insumos
@@ -140,6 +140,25 @@ app.post("/createInsumos", (req, res) => {
         }
     );
 });
+app.put("/updateInsumos", (req, res) => {
+    const codigo = req.body.codigo;
+    const nombre = req.body.nombre;
+    const cantidad = req.body.cantidad;
+    const imagen = req.body.imagen;
+    const f_ingreso = req.body.f_ingreso;
+    const f_vencimiento = req.body.f_vencimiento;
+    const costo = req.body.costo;
+    console.log(f_ingreso);
+    db.query('UPDATE insumos SET imagen=?, nombre=?, cantidad=?, f_ingreso=?, f_vencimiento=?, costo=? WHERE codigo=?', [imagen, nombre, cantidad, f_ingreso, f_vencimiento, costo, codigo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("insumo actualizado");
+            }
+        }
+    );
+});
 app.get("/insumos", (req, res) => {
     let response
     db.query('SELECT * FROM insumos',
@@ -153,17 +172,31 @@ app.get("/insumos", (req, res) => {
     );
     return response
 });
-app.delete("/deleteInsumos/:codigo",(req,res)=>{
+app.get("/insumo/:codigo", (req, res) => {
+    const codigo = req.params.codigo;
+    let response
+    db.query('SELECT * FROM insumos WHERE codigo=?', [codigo], 
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result[0]);
+            }
+        }
+    );
+    return response
+});
+app.delete("/deleteInsumos/:codigo", (req, res) => {
     const codigo = req.params.codigo;
 
-    db.query('DELETE from insumos WHERE codigo=?',[codigo],
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            res.send("insumo eliminado con exito");
+    db.query('DELETE from insumos WHERE codigo=?', [codigo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("insumo eliminado con exito");
+            }
         }
-    }
     );
 });
 //utensilios
@@ -183,6 +216,21 @@ app.post("/createUtensilios", (req, res) => {
         }
     );
 });
+app.put("/updateUtensilios", (req, res) => {
+    const codigo = req.body.codigo
+    const imagen = req.body.imagen;
+    const nombre = req.body.nombre;
+    const cantidad = req.body.cantidad;
+    db.query('UPDATE utensilios SET imagen=?, nombre=?, cantidad=? WHERE codigo=?', [imagen, nombre, cantidad, codigo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("utensilio actualizado");
+            }
+        }
+    );
+});
 app.get("/utensilios", (req, res) => {
     let response
     db.query('SELECT * FROM utensilios',
@@ -196,17 +244,32 @@ app.get("/utensilios", (req, res) => {
     );
     return response
 });
-app.delete("/deleteUtensilios/:codigo",(req,res)=>{
+app.get("/utensilio/:codigo", (req, res) => {
+    const codigo = req.params.codigo;
+    let response
+    db.query('SELECT * FROM utensilios WHERE codigo=?', [codigo],
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result[0]);
+            }
+        }
+    );
+    return response
+});
+
+app.delete("/deleteUtensilios/:codigo", (req, res) => {
     const codigo = req.params.codigo;
 
-    db.query('DELETE from utensilios WHERE codigo=?',[codigo],
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            res.send("utensilio eliminado con exito");
+    db.query('DELETE from utensilios WHERE codigo=?', [codigo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("utensilio eliminado con exito");
+            }
         }
-    }
     );
 });
 //proveedores
@@ -305,17 +368,17 @@ app.get("/eventos", (req, res) => {
     );
     return response
 });
-app.delete("/deleteEventos/:codigo",(req,res)=>{
+app.delete("/deleteEventos/:codigo", (req, res) => {
     const codigo = req.params.codigo;
 
-    db.query('DELETE from eventos WHERE codigo=?',[codigo],
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            res.send("evento eliminado con exito");
+    db.query('DELETE from eventos WHERE codigo=?', [codigo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("evento eliminado con exito");
+            }
         }
-    }
     );
 });
 //productos
@@ -335,7 +398,7 @@ app.post("/createProductos", (req, res) => {
                 console.log(err);
             } else {
                 res.send("producto registrado");
-                
+
             }
         }
     );
@@ -347,7 +410,7 @@ app.put("/updateProductos", (req, res) => {
     const descripcion = req.body.descripcion;
     const precio = req.body.precio;
     const cantidad = req.body.cantidad;
-    db.query('UPDATE productos SET codigo=?, imagen=?, nombre=?, descripcion=?, precio=?, cantidad=? WHERE codigo=?', [codigo, imagen, nombre, descripcion, precio, cantidad],
+    db.query('UPDATE productos SET imagen=?, nombre=?, descripcion=?, precio=?, cantidad=? WHERE codigo=?', [imagen, nombre, descripcion, precio, cantidad, codigo],
         (err, result) => {
             if (err) {
                 console.log(err);
@@ -371,26 +434,40 @@ app.get("/productos", (req, res) => {
     );
     return response
 });
-app.delete("/deleteProductos/:codigo",(req,res)=>{
+app.get("/producto/:codigo", (req, res) => {
+    const codigo = req.params.codigo;
+    let response
+    db.query('SELECT * FROM productos WHERE codigo=?', [codigo],
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result[0]);
+            }
+        }
+    );
+    return response
+});
+app.delete("/deleteProductos/:codigo", (req, res) => {
     const codigo = req.params.codigo;
 
-    db.query('DELETE from facturas WHERE producto=?',[codigo],
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            res.send("producto eliminado con exito");
+    db.query('DELETE from facturas WHERE producto=?', [codigo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+                res.send("producto eliminado con exito");
+            }
         }
-    }
     );
-    db.query('DELETE from productos WHERE codigo=?',[codigo],
-    (err,result)=>{
-        if(err){
-            console.log(err);
-        }else{
-            
+    db.query('DELETE from productos WHERE codigo=?', [codigo],
+        (err, result) => {
+            if (err) {
+                console.log(err);
+            } else {
+
+            }
         }
-    }
     );
 });
 app.post("/createFacturas", (req, res) => {
@@ -409,9 +486,9 @@ app.post("/createFacturas", (req, res) => {
             if (err) {
                 console.log(err);
             } else {
-                
+
                 res.send("factura registrada");
-                
+
             }
         }
     );
