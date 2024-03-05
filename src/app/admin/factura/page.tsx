@@ -12,17 +12,22 @@ export default function PageFactura(){
     const [total, setTotal] = useState(0);
     const [consumidor, setConsumidor] = useState("");
     const [producto, setProducto] = useState("");
-
+    const [productos, setProductos] = useState([]);
+    const [countData, setCountData] = useState([]);
+    
     const add = ()=>{
+        setProductos(productos.shift())
+        addData()
         axios.post("http://localhost:3001/createFacturas",{
-            fecha:fecha,    
+            fecha:fecha,
             estado:estado,
-            subtotal:subtotal,
-            precio:precio,
             cantidad:cantidad,
+            precio:precio,
+            subtotal:subtotal,
             total:total,
             consumidor:consumidor,
             producto:producto,
+            fact: productos
         }).then(()=>{
             alert("Factura registrada");
         });
@@ -41,11 +46,16 @@ export default function PageFactura(){
         });
       }, [])
         console.log(productosList)
-  const [productos, setProductos] = useState([{ Producto: 0, Cantidad: 0, Subtotal: 0, Venta:0 }]);
   const agregarFila = () => {
-    const nuevoProducto = { Producto: 0, Cantidad: 0, Subtotal: 0, Venta:0 };
-    setProductos([...productos, nuevoProducto]);
-  };  
+    setCountData([...productos, {producto:producto, cantidad:cantidad, precio:precio, subtotal:subtotal}])
+    console.log(countData);
+    addData()
+};  
+const addData = () =>{
+      setProductos([...productos, {producto:producto, cantidad:cantidad, precio:precio, subtotal:subtotal}])
+      console.log(productos);
+      
+  }
     return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Registrar factura</a></div>
@@ -73,17 +83,18 @@ export default function PageFactura(){
                 <div className="col-3 my-1 ">Precio/U</div>
                 <div className="col-3 my-1">Subtotal</div>
             </div>
-            {productos.map((producto, index) => (
+            {countData.map((producto, index) => (
                 <div key={index} className="row my-1">
                 <div className="row mx-4">
                 <select onChange={(event) => { setProducto(event.target.value); }} className="col-3 texto_drop">
+                <option >selecciona el producto</option>
                 {productosList.map((val,key)=>{
             return <><option value={val.codigo}>{val.nombre}</option></>})
         }
                 </select>
                <input onChange={(event) => { setCantidad(parseInt(event.target.value)); }} type="number" className="col-3 texto_drop"></input>
                 <input onChange={(event) => { setPrecio(parseInt(event.target.value)); }} className="col-3 texto_drop" type="number"></input>
-                <input onChange={(event) => { setSubtotal(parseInt(event.target.value)); }} value={cantidad*precio} type="number" className="col-3 texto_drop"></input>
+                <input onChange={(event) => { setSubtotal(parseInt(event.target.value)); }}  type="number" className="col-3 texto_drop"></input>
                 </div>
             </div>
             ))}

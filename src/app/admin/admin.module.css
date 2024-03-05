@@ -48,6 +48,7 @@
     border-radius: 5px;
 }
 .edit{
+    color: white;
     float: right;
     background-color: #CC3366;
     opacity: 80%;

@@ -1,6 +1,15 @@
 'use client'
 import styles from "@/app/admin/admin.module.css"
-export default function balanceMensual(){
+import { useEffect, useState } from "react";
+import axios from "axios";
+export default function BalanceMensual(){
+    const [MensualList, setMensual] = useState([]);
+    useEffect(() => {
+      axios.get("http://localhost:3001/mensual").then((response) => {
+        setMensual(response.data);
+        console.log(response.data);
+      });
+    }, []);
  return(<>
     <div className="row my-4">
         <div className="text_nav text-center"><a className="tittle">Balance Mensual</a></div>
@@ -13,13 +22,17 @@ export default function balanceMensual(){
             <div className="col-2">Cantidad</div>
             <div className="col-3">Total</div>
         </div>
+        {MensualList.map((val, key) => {
+          return <>
         <div className="row mx-2 my-1 texto_drop">
-        <div className="col-2">1112233</div>
-            <div className="col-2">01/01/2024</div>
-            <div className="col-3">Expresso</div>
-            <div className="col-2">3</div>
-            <div className="col-3">12000</div>
+        <div className="col-2">{val.nro}</div>
+            <div className="col-2">{val.fecha}</div>
+            <div className="col-3">{val.producto}</div>
+            <div className="col-2">{val.cantidad}</div>
+            <div className="col-3">{val.total}</div>
         </div>
+        </>
+        })}
     </div>
     <div className="container justify-content-center my-3">
     <div className="row">

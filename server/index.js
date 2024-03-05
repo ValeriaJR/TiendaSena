@@ -506,7 +506,48 @@ app.get("/facturas", (req, res) => {
     );
     return response
 });
-
+//balance diario
+app.get("/diario", (req, res) => {
+    let response
+    db.query('SELECT * FROM facturas WHERE DATE(fecha) = CURDATE()',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
+//balance mensual
+app.get("/mensual", (req, res) => {
+    let response
+    db.query('SELECT * FROM facturas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
+//proximos  a vencer
+app.get("/vencimiento", (req, res) => {
+    let response
+    db.query('SELECT * FROM insumos WHERE f_vencimiento >= CURRENT_DATE - INTERVAL 5 DAY',
+        (err, result) => {
+            if (err) {
+                response = err
+            } else {
+                response = res.send(result);
+            }
+        }
+    );
+    return response
+});
 app.listen(3001, () => {
     console.log("corriendo en el puerto 3001")
 })

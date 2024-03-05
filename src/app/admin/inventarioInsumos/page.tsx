@@ -63,7 +63,7 @@ export default function Insumos() {
             </div>
             <div className="col-sm-6 col-md-4 col-lg-3">
               <Link href={`/admin/inventarioInsumos/${val.codigo}`} className={`${styles.text_form}`}>
-                <button className={`${styles.ingresar} col-5 text-center align-items-center m-3 p-1 `}
+                <button className={`${style.edit} w-100 my-2 text-center align-items-center p-1 `}
                   type="submit">Editar</button>
               </Link>
               <br />
