@@ -2,11 +2,16 @@
 import styles from "@/app/admin/admin.module.css";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { isTemplateExpression } from "typescript";
 export default function BalanceDiario() {
   const [diarioList, setDiario] = useState([]);
+  const [ingresosList, setIngresos] = useState(null);
+  const [egresosList, setEgresos] = useState(null);
   useEffect(() => {
     axios.get("http://localhost:3001/diario").then((response) => {
       setDiario(response.data);
+      setIngresos(response.data[0].sumTotalIngresos);
+      setEgresos(response.data[0].sumTotalEgresos)
       console.log(response.data);
     });
   }, []);
@@ -40,33 +45,25 @@ export default function BalanceDiario() {
 
       <div className="container justify-content-center my-3">
         <div className="row">
-          <div className={`${styles.list} col-3 ms-4`}></div>
-          <div className={`${styles.list} col-4 ms-3`}></div>
-          <div className={`${styles.list} col-4 ms-3`}></div>
+          <div className={`${styles.list} col-5 ms-4`}></div>
+          <div className={`${styles.list} col-5 ms-3`}></div>
         </div>
         <div className="row">
-          <div className={`${styles.list_data} col-3 ms-4`}>
-            <div className="row mt-2">
-              Ingresos: <b className="text-center">10</b>{" "}
+          <div className={`${styles.list_data} col-5 ms-4`}>
+              <div className="row mt-2">
+              Ingresos: <b className="text-center"> 
+              {ingresosList}</b>
             </div>
             <div className={`${styles.img_inicio} row `}>
               <img className="col-4" src="/incremento.svg" alt=""></img>
             </div>
           </div>
-          <div className={`${styles.list_data} col-4 ms-3`}>
+          <div className={`${styles.list_data} col-5 ms-3`}>
             <div className="row mt-2">
-              Egresos: <b className="text-center">10</b>
+              Egresos: <b className="text-center">{egresosList}</b>
             </div>
             <div className={`${styles.img_inicio} row `}>
               <img className="col-3" src="/decremento.svg" alt=""></img>
-            </div>
-          </div>
-          <div className={`${styles.list_data} col-4 ms-3`}>
-            <div className="row mt-2">
-              Perdidas: <b className="text-center">10</b>
-            </div>
-            <div className={`${styles.img_inicio} row`}>
-              <img className="col-3" src="/cash.svg" alt=""></img>
             </div>
           </div>
         </div>

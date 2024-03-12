@@ -509,7 +509,7 @@ app.get("/facturas", (req, res) => {
 //balance diario
 app.get("/diario", (req, res) => {
     let response
-    db.query('SELECT * FROM facturas WHERE DATE(fecha) = CURDATE()',
+    db.query('SELECT facturas.*, COALESCE(sumTotalIngresos, 0) AS sumTotalIngresos, COALESCE(sumTotalEgresos, 0) AS sumTotalEgresos FROM ( SELECT * FROM facturas WHERE DATE(fecha) = CURDATE() ) AS facturas, (SELECT SUM(total) as sumtotalIngresos FROM facturas WHERE total > 0 AND fecha = CURDATE()) AS totalIngresos, (SELECT SUM(total) as sumTotalEgresos FROM facturas WHERE total < 0 AND fecha = CURDATE()) as totalEgresos;',
         (err, result) => {
             if (err) {
                 response = err
@@ -523,7 +523,7 @@ app.get("/diario", (req, res) => {
 //balance mensual
 app.get("/mensual", (req, res) => {
     let response
-    db.query('SELECT * FROM facturas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE())',
+    db.query('SELECT facturas.*, COALESCE(sumTotalIngresos, 0) AS sumTotalIngresos, COALESCE(sumTotalEgresos, 0) AS sumTotalEgresos FROM ( SELECT * FROM facturas WHERE MONTH(fecha) = MONTH(CURDATE()) AND YEAR(fecha) = YEAR(CURDATE()) ) AS facturas, (SELECT SUM(total) as sumTotalIngresos FROM facturas WHERE total > 0 AND MONTH(fecha) = MONTH(CURRENT_DATE)) AS totalIngresos, (SELECT SUM(total) as sumTotalEgresos FROM facturas WHERE total < 0 AND MONTH(fecha) = MONTH(CURRENT_DATE)) as totalEgresos',
         (err, result) => {
             if (err) {
                 response = err
@@ -534,6 +534,7 @@ app.get("/mensual", (req, res) => {
     );
     return response
 });
+
 //proximos  a vencer
 app.get("/vencimiento", (req, res) => {
     let response
