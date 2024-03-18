@@ -40,10 +40,10 @@ export default function Eventos(){
                     <img className="col-8 px-0 rounded-start" src="/IMAGE.png" alt=""></img>
                 </div>
                 <div className="col-8">
-                    <span className={`${styles.text_carta} col-8`}>{val.hora_inicio}-{val.hora_fin}</span><br></br>
-                    <span className={`${styles.text_form} col-10`}>{val.descripcion}</span>
+                    <span className={`${styles.text_carta} col-8`}>Hora: {val.hora_inicio}-{val.hora_fin}</span><br></br>
+                    <span className={`${styles.text_form} col-10`}> {val.descripcion}</span>
                         <div className="col-3 my-1">
-                            <span className={`${styles.text_eventos} col-10`}>{val.fecha}<br></br>Cupos: {val.cupo}</span>  
+                            <span className={`${styles.text_eventos} col-10`}> {val.fecha}<br></br>Cupos: {val.cupo}</span>  
                         </div>
                         <button className={`${styles.ingresar} col-5 text-center align-items-center p-1 `} onClick={()=>{
                         eliminar(val.codigo);
